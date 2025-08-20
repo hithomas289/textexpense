@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextExpense - Turn Receipt Photos into Excel Reports Instantly via WhatsApp</title>
+    <meta name="description" content="Text your receipts to WhatsApp, get organized Excel reports instantly. No app downloads, no complex setup. Start free with 5 receipts per month.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #075E54;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #e0e0e0;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: #fff;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.98);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--dark);
+            padding: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 100px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(37, 211, 102, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(18px, 2.5vw, 24px);
+            color: var(--gray);
+            margin-bottom: 40px;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .whatsapp-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--primary);
+            color: white;
+            padding: 20px 32px;
+            border-radius: 60px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-number::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .whatsapp-number:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .whatsapp-number:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.4);
+        }
+
+        .trust-text {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 20px;
+            background: var(--light);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .step:hover::before {
+            transform: scaleX(1);
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .step p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #f8fafb 0%, #ffffff 100%);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .feature {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 211, 102, 0.03) 0%, transparent 70%);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+
+        .feature:hover::after {
+            opacity: 1;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .feature p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.15);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 4px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+        }
+
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .plan-price {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .plan-price span {
+            font-size: 18px;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .plan-description {
+            color: var(--gray);
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .plan-features li {
+            padding: 10px 0;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .plan-button:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .pricing-card.featured .plan-button {
+            background: var(--primary);
+            color: white;
+        }
+
+        .pricing-card.featured .plan-button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Stats */
+        .stats {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafb 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                width: 100%;
+                padding: 12px;
+                text-align: center;
+                border-radius: 8px;
+                transition: background 0.3s;
+            }
+
+            .nav-links a:hover {
+                background: var(--light);
+            }
+
+            /* Fix CTA button alignment in mobile menu */
+            .nav-links .cta-button {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 12px;
+            }
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .whatsapp-number {
+                font-size: 18px;
+                padding: 16px 24px;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Copy notification */
+        .copy-notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--dark);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        .copy-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal styles for Privacy Policy and Terms */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            position: relative;
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+        }
+
+        .modal h2 {
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            color: var(--dark);
+            margin: 30px 0 15px;
+        }
+
+        .modal p, .modal li {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .modal ul {
+            padding-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">TextExpense</div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            <div class="nav-links" id="navLinks">
+                <a href="#how-it-works" onclick="closeMobileMenu()">How It Works</a>
+                <a href="#features" onclick="closeMobileMenu()">Features</a>
+                <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+                <a href="#" onclick="openWhatsApp(); closeMobileMenu(); return false;" class="cta-button">
+                    <span>💬</span> Start Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Stop Losing Receipts.<br>Stop Manual Entry.<br>Stop The Madness.</h1>
+                <p class="subtitle">No more shoebox chaos. Just text receipts to WhatsApp as you spend. Get perfect expense reports for taxes, accounting, reimbursements - automatically.</p>
+                
+                <div onclick="openWhatsApp()" class="whatsapp-number">
+                    <span>💬</span> Start on WhatsApp
+                </div>
+                
+                <p class="trust-text">Click to open WhatsApp • Start with 3 free receipts • No app download needed</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>Expense Tracking Made Ridiculously Simple</h2>
+                <p>Three steps to organized expenses. That's it.</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Send Your Receipts</h3>
+                    <p>Text any receipt to our WhatsApp number. Photos, PDFs, forwarded documents - any format works. Coffee receipt, invoice, gas bill - anything.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>We Extract Everything</h3>
+                    <p>Our AI instantly reads the merchant, date, amount, tax, and all details. You just confirm or edit if needed.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Excel Reports</h3>
+                    <p>Type "report" anytime to get a perfectly formatted Excel file with all your expenses. Ready for accounting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything You Need, Nothing You Don't</h2>
+                <p>Built for people who hate expense reports but need them done.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>30-Second Processing</h3>
+                    <p>Send any format - photo, PDF, document. Our AI extracts everything instantly - merchant, date, amount, tax. No manual entry.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">📊</div>
+                    <h3>Excel Reports On-Demand</h3>
+                    <p>Type "report" to get organized Excel expense reports with summary sheets and expense history. Ready for your accounting or tax filing.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>99% Accuracy</h3>
+                    <p>Powered by Google Vision + GPT-4. Handles photos, PDFs, screenshots, forwarded docs. Crumpled receipts, faded text, any language.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">💬</div>
+                    <h3>Zero Learning Curve</h3>
+                    <p>It's just WhatsApp. No app to download, no account to create, no training needed. Your grandma could use this.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Categories & Descriptions</h3>
+                    <p>Add custom categories and descriptions to your expenses. "Business lunch with client" or "Office supplies" - organize your way.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Bank-Level Security</h3>
+                    <p>GDPR compliant, encrypted storage, automatic data deletion options. Your financial data stays private and secure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-number">12hrs</div>
+                    <div class="stat-label">Saved Per Year</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">30sec</div>
+                    <div class="stat-label">Per Receipt</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">OCR Accuracy</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$0</div>
+                    <div class="stat-label">Setup Cost</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple, Transparent Pricing</h2>
+                <p>Start free. Upgrade when you need more. Cancel anytime.</p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="plan-name">Free</div>
+                    <div class="plan-price">$0<span>/month</span></div>
+                    <div class="plan-description">Perfect for trying it out</div>
+                    <ul class="plan-features">
+                        <li>3 receipts per month</li>
+                        <li>Excel report generation</li>
+                        <li>30-day history</li>
+                        <li>Basic categories</li>
+                    </ul>
+                    <button class="plan-button" onclick="openWhatsApp()">Start Free</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-price">$4.99<span>/month</span></div>
+                    <div class="plan-description">For freelancers & small businesses</div>
+                    <ul class="plan-features">
+                        <li>Unlimited receipts</li>
+                        <li>Excel reports with summary</li>
+                        <li>3-month history</li>
+                        <li>Custom categories & descriptions</li>
+                        <li>Priority processing</li>
+                        <li>Monthly spending insights</li>
+                    </ul>
+                    <button class="plan-button" onclick="openWhatsApp()">Start Pro</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Never Lose a Receipt Again?</h2>
+            <p>Join thousands who've simplified their expense tracking. Start with 3 free receipts today.</p>
+            <div onclick="openWhatsApp()" class="whatsapp-number">
+                <span>💬</span> Start on WhatsApp
+            </div>
+            <p class="trust-text">No credit card • No app download • Cancel anytime</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TextExpense</h3>
+                    <p>The simplest way to track expenses. Text your receipts to WhatsApp, get organized Excel reports instantly.</p>
+                    <p style="margin-top: 20px;">A product by Loopin Technologies</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <p><a href="#how-it-works">How It Works</a></p>
+                    <p><a href="#features">Features</a></p>
+                    <p><a href="#pricing">Pricing</a></p>
+                    <p><a href="mailto:support@textexpense.com">Support</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <p><a href="#" onclick="showPrivacyPolicy()">Privacy Policy</a></p>
+                    <p><a href="#" onclick="showTerms()">Terms & Conditions</a></p>
+                    <p><a href="mailto:support@textexpense.com">Contact Us</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <p>WhatsApp: +1 (555) 123-4567</p>
+                    <p>Email: support@textexpense.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Loopin Technologies. All rights reserved. | TextExpense is a registered product of Loopin Technologies.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Copy Notification -->
+    <div class="copy-notification" id="copyNotification">
+        📱 Number copied! Open WhatsApp and paste to start.
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closePrivacyPolicy()">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p><strong>Effective Date:</strong> January 1, 2025</p>
+            <p><strong>Last Updated:</strong> January 1, 2025</p>
+            
+            <p>Loopin Technologies ("we," "our," or "us") operates TextExpense, a WhatsApp-based expense management service. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our service.</p>
+            
+            <h3>1. Information We Collect</h3>
+            <p>We collect information you provide directly to us through WhatsApp:</p>
+            <ul>
+                <li><strong>Contact Information:</strong> Your WhatsApp phone number (including country code)</li>
+                <li><strong>Receipt Data:</strong> Images of receipts you send us and extracted information (merchant names, dates, amounts, tax details)</li>
+                <li><strong>User Communications:</strong> Messages you send to our WhatsApp Business account</li>
+                <li><strong>Transaction Data:</strong> Expense categories, descriptions, and notes you provide</li>
+                <li><strong>Usage Data:</strong> Service usage patterns, command history, and interaction timestamps</li>
+            </ul>
+            
+            <h3>2. How We Use Your Information</h3>
+            <p>We use the information we collect to:</p>
+            <ul>
+                <li>Process receipt images and extract expense data using OCR technology</li>
+                <li>Generate expense reports in Excel and other formats</li>
+                <li>Maintain your expense history and provide search functionality</li>
+                <li>Communicate with you about your account and provide customer support</li>
+                <li>Process payments and manage subscriptions</li>
+                <li>Improve our service and develop new features</li>
+                <li>Comply with legal obligations and enforce our terms</li>
+            </ul>
+            
+            <h3>3. Information Sharing and Disclosure</h3>
+            <p>We do not sell, trade, or rent your personal information. We may share your information only in the following circumstances:</p>
+            <ul>
+                <li><strong>Service Providers:</strong> With third-party vendors who perform services on our behalf (WhatsApp Business API providers, cloud storage, OCR services)</li>
+                <li><strong>Legal Requirements:</strong> When required by law or to respond to legal process</li>
+                <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets</li>
+                <li><strong>Consent:</strong> With your explicit consent</li>
+            </ul>
+            
+            <h3>4. Data Retention</h3>
+            <p>We retain your information for as long as necessary to provide our services:</p>
+            <ul>
+                <li><strong>Free accounts:</strong> 30 days of expense history</li>
+                <li><strong>Pro accounts:</strong> 3 months of expense history</li>
+                <li><strong>After account closure:</strong> Data deleted within 30 days unless retention is required by law</li>
+            </ul>
+            
+            <h3>5. Data Security</h3>
+            <p>We implement appropriate technical and organizational security measures to protect your information:</p>
+            <ul>
+                <li>End-to-end encryption for WhatsApp communications</li>
+                <li>Encrypted storage for receipt images and data</li>
+                <li>Secure HTTPS connections for all data transfers</li>
+                <li>Regular security audits and updates</li>
+                <li>Limited access controls for personnel</li>
+            </ul>
+            
+            <h3>6. International Data Transfers</h3>
+            <p>Your information may be transferred to and processed in countries other than your country of residence. We ensure appropriate safeguards are in place to protect your information in accordance with this Privacy Policy.</p>
+            
+            <h3>7. Your Rights and Choices</h3>
+            <p>Depending on your location, you may have the following rights:</p>
+            <ul>
+                <li><strong>Access:</strong> Request a copy of your personal information</li>
+                <li><strong>Correction:</strong> Request correction of inaccurate information</li>
+                <li><strong>Deletion:</strong> Request deletion of your information</li>
+                <li><strong>Portability:</strong> Receive your data in a structured format</li>
+                <li><strong>Objection:</strong> Object to certain processing activities</li>
+                <li><strong>Withdrawal:</strong> Withdraw consent where processing is based on consent</li>
+            </ul>
+            
+            <h3>8. WhatsApp Integration</h3>
+            <p>Our service integrates with WhatsApp Business API. By using our service, you acknowledge that:</p>
+            <ul>
+                <li>WhatsApp's terms of service and privacy policy also apply</li>
+                <li>Message metadata may be shared with Meta (WhatsApp's parent company)</li>
+                <li>We use official WhatsApp Business API providers for message delivery</li>
+                <li>We comply with WhatsApp Business Policy and Commerce Policy</li>
+            </ul>
+            
+            <h3>9. Children's Privacy</h3>
+            <p>Our service is not intended for children under 18. We do not knowingly collect personal information from children under 18. If we learn we have collected information from a child under 18, we will delete it promptly.</p>
+            
+            <h3>10. Changes to This Privacy Policy</h3>
+            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by updating the "Last Updated" date and, for material changes, we will provide additional notice through WhatsApp or email.</p>
+            
+            <h3>11. Contact Us</h3>
+            <p>If you have questions about this Privacy Policy or our privacy practices, please contact us at:</p>
+            <p>
+                Loopin Technologies<br>
+                Email: support@textexpense.com<br>
+                WhatsApp: +1 (555) 123-4567
+            </p>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Modal -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeTerms()">&times;</span>
+            <h2>Terms and Conditions</h2>
+            <p><strong>Effective Date:</strong> January 1, 2025</p>
+            <p><strong>Last Updated:</strong> January 1, 2025</p>
+            
+            <p>These Terms and Conditions ("Terms") govern your use of TextExpense, a WhatsApp-based expense management service operated by Loopin Technologies ("we," "our," or "us"). By using our service, you agree to these Terms.</p>
+            
+            <h3>1. Service Description</h3>
+            <p>TextExpense is a WhatsApp-based service that:</p>
+            <ul>
+                <li>Processes receipt images and documents sent via WhatsApp</li>
+                <li>Extracts expense data using OCR and AI technology</li>
+                <li>Generates organized expense reports in Excel format with summaries</li>
+                <li>Maintains expense history and provides categorization</li>
+            </ul>
+            
+            <h3>2. Eligibility</h3>
+            <p>To use our service, you must:</p>
+            <ul>
+                <li>Be at least 18 years old</li>
+                <li>Have a valid WhatsApp account</li>
+                <li>Have the legal capacity to enter into these Terms</li>
+                <li>Not be prohibited from using the service under applicable laws</li>
+            </ul>
+            
+            <h3>3. Account Registration and Security</h3>
+            <ul>
+                <li>Your WhatsApp phone number serves as your unique account identifier</li>
+                <li>You are responsible for maintaining the security of your WhatsApp account</li>
+                <li>You must notify us immediately of any unauthorized use</li>
+                <li>We are not liable for any loss from unauthorized account access</li>
+            </ul>
+            
+            <h3>4. Acceptable Use</h3>
+            <p>You agree not to:</p>
+            <ul>
+                <li>Use the service for any illegal or unauthorized purpose</li>
+                <li>Submit false, misleading, or fraudulent expense information</li>
+                <li>Violate any laws, including tax and financial reporting regulations</li>
+                <li>Attempt to reverse engineer or hack our service</li>
+                <li>Overwhelm our systems with excessive requests</li>
+                <li>Share or resell access to your account</li>
+                <li>Use the service to process inappropriate or offensive content</li>
+            </ul>
+            
+            <h3>5. Subscription Plans and Payment</h3>
+            <ul>
+                <li><strong>Free Plan:</strong> 3 receipts per month, 30-day history</li>
+                <li><strong>Pro Plan:</strong> $4.99/month, unlimited receipts, 3-month history</li>
+                <li>Prices are subject to change with 30 days notice</li>
+                <li>Subscriptions automatically renew unless cancelled</li>
+                <li>No refunds for partial months</li>
+            </ul>
+            
+            <h3>6. Service Limitations</h3>
+            <ul>
+                <li>OCR accuracy depends on receipt image quality</li>
+                <li>We do not guarantee 100% accuracy in data extraction</li>
+                <li>Users are responsible for verifying extracted data</li>
+                <li>Service availability subject to WhatsApp API functionality</li>
+                <li>Processing times may vary based on system load</li>
+            </ul>
+            
+            <h3>7. Intellectual Property</h3>
+            <ul>
+                <li>We retain all rights to our service, software, and content</li>
+                <li>You retain ownership of your receipt images and expense data</li>
+                <li>You grant us a license to process and store your data to provide the service</li>
+                <li>You may not copy, modify, or distribute our software or content</li>
+            </ul>
+            
+            <h3>8. Privacy and Data Protection</h3>
+            <ul>
+                <li>Your use of our service is governed by our Privacy Policy</li>
+                <li>We process your data in accordance with applicable privacy laws</li>
+                <li>You consent to our data processing as described in the Privacy Policy</li>
+                <li>We implement appropriate security measures to protect your data</li>
+            </ul>
+            
+            <h3>9. Disclaimer of Warranties</h3>
+            <p>THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:</p>
+            <ul>
+                <li>MERCHANTABILITY</li>
+                <li>FITNESS FOR A PARTICULAR PURPOSE</li>
+                <li>NON-INFRINGEMENT</li>
+                <li>ACCURACY OR RELIABILITY OF INFORMATION</li>
+            </ul>
+            
+            <h3>10. Limitation of Liability</h3>
+            <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW:</p>
+            <ul>
+                <li>We are not liable for any indirect, incidental, or consequential damages</li>
+                <li>Our total liability shall not exceed the amount paid by you in the past 12 months</li>
+                <li>We are not responsible for tax or financial reporting errors</li>
+                <li>We are not liable for WhatsApp service interruptions</li>
+            </ul>
+            
+            <h3>11. Indemnification</h3>
+            <p>You agree to indemnify and hold harmless Loopin Technologies from any claims, damages, or expenses arising from:</p>
+            <ul>
+                <li>Your violation of these Terms</li>
+                <li>Your use of the service</li>
+                <li>Your violation of any laws or third-party rights</li>
+                <li>Any content you submit through the service</li>
+            </ul>
+            
+            <h3>12. Termination</h3>
+            <ul>
+                <li>You may terminate your account at any time by contacting us</li>
+                <li>We may terminate or suspend your account for Terms violations</li>
+                <li>Upon termination, your data will be deleted per our Privacy Policy</li>
+                <li>Provisions that should survive termination will remain in effect</li>
+            </ul>
+            
+            <h3>13. Changes to Terms</h3>
+            <ul>
+                <li>We may update these Terms from time to time</li>
+                <li>Material changes will be notified via WhatsApp or email</li>
+                <li>Continued use after changes constitutes acceptance</li>
+                <li>If you disagree with changes, you should stop using the service</li>
+            </ul>
+            
+            <h3>14. WhatsApp Business Terms</h3>
+            <p>By using our service, you acknowledge that:</p>
+            <ul>
+                <li>Our service operates through WhatsApp Business API</li>
+                <li>WhatsApp's terms of service apply to your communications</li>
+                <li>We comply with WhatsApp Business Policy and Commerce Policy</li>
+                <li>Service availability depends on WhatsApp platform functionality</li>
+            </ul>
+            
+            <h3>15. Governing Law and Disputes</h3>
+            <ul>
+                <li>These Terms are governed by the laws of Chennai, India</li>
+                <li>Disputes shall be resolved through binding arbitration</li>
+                <li>You waive the right to participate in class actions</li>
+                <li>Small claims court actions are permitted</li>
+            </ul>
+            
+            <h3>16. Contact Information</h3>
+            <p>For questions about these Terms, please contact us at:</p>
+            <p>
+                Loopin Technologies<br>
+                Email: support@textexpense.com<br>
+                WhatsApp: +1 (555) 123-4567
+            </p>
+            
+            <h3>17. Entire Agreement</h3>
+            <p>These Terms, along with our Privacy Policy, constitute the entire agreement between you and Loopin Technologies regarding TextExpense and supersede any prior agreements.</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Close mobile menu
+        function closeMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Open WhatsApp directly
+        function openWhatsApp() {
+            const number = '15551234567'; // Replace with your actual number without + or spaces
+            const message = 'Hi, I want to start tracking my expenses!'; // Optional pre-filled message
+            const whatsappURL = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Copy phone number to clipboard (backup function)
+        function copyNumber() {
+            // Try to open WhatsApp first
+            openWhatsApp();
+            
+            // Also copy number as backup
+            const number = '+15551234567';
+            navigator.clipboard.writeText(number).then(function() {
+                showCopyNotification();
+            }, function(err) {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = number;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopyNotification();
+            });
+        }
+
+        // Show copy notification
+        function showCopyNotification() {
+            const notification = document.getElementById('copyNotification');
+            notification.textContent = '🚀 Opening WhatsApp... Number also copied!';
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Privacy Policy Modal
+        function showPrivacyPolicy() {
+            document.getElementById('privacyModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePrivacyPolicy() {
+            document.getElementById('privacyModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Terms Modal
+        function showTerms() {
+            document.getElementById('termsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTerms() {
+            document.getElementById('termsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const privacyModal = document.getElementById('privacyModal');
+            const termsModal = document.getElementById('termsModal');
+            if (event.target == privacyModal) {
+                closePrivacyPolicy();
+            }
+            if (event.target == termsModal) {
+                closeTerms();
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href !== '#privacy' && href !== '#terms') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.step, .feature, .pricing-card, .stat');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
