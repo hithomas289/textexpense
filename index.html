@@ -1689,5 +1689,38 @@
             });
         });
     </script>
+    <script>
+        // Track WhatsApp button clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all WhatsApp links
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"]');
+            
+            whatsappLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    // Get the button text to identify which CTA was clicked
+                    let buttonLocation = 'unknown';
+                    let buttonText = link.textContent.trim();
+                    
+                    // Identify which section the button is in
+                    if (link.closest('.hero')) {
+                        buttonLocation = 'hero_section';
+                    } else if (link.closest('.footer-cta')) {
+                        buttonLocation = 'footer_cta';
+                    } else if (link.closest('.footer-main')) {
+                        buttonLocation = 'footer_main';
+                    } else if (link.closest('header')) {
+                        buttonLocation = 'header';
+                    }
+                    
+                    // Send event to GA4
+                    gtag('event', 'whatsapp_click', {
+                        'button_location': buttonLocation,
+                        'button_text': buttonText,
+                        'page_url': window.location.href
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
