@@ -1688,36 +1688,50 @@
                 document.querySelector('.nav-links').classList.remove('active');
             });
         });
-    </script>
+    </script>   
     <script>
-        // Track WhatsApp button clicks
+        // Track WhatsApp button clicks - Fixed for wa.me links
         document.addEventListener('DOMContentLoaded', function() {
-            // Get all WhatsApp links
-            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"], a[href*="whatsapp.com"]');
+            console.log('WhatsApp tracking script loaded');
             
-            whatsappLinks.forEach(function(link) {
+            // Get all links that contain wa.me
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+            console.log('Found WhatsApp links:', whatsappLinks.length);
+            
+            whatsappLinks.forEach(function(link, index) {
                 link.addEventListener('click', function(e) {
-                    // Get the button text to identify which CTA was clicked
-                    let buttonLocation = 'unknown';
-                    let buttonText = link.textContent.trim();
+                    console.log('WhatsApp button clicked:', index);
                     
-                    // Identify which section the button is in
-                    if (link.closest('.hero')) {
-                        buttonLocation = 'hero_section';
-                    } else if (link.closest('.footer-cta')) {
+                    // Get button details
+                    let buttonText = this.textContent.trim();
+                    let buttonLocation = 'unknown';
+                    
+                    // Identify which section based on your HTML structure
+                    if (this.closest('.hero')) {
+                        buttonLocation = 'hero';
+                    } else if (this.closest('.footer-cta')) {
                         buttonLocation = 'footer_cta';
-                    } else if (link.closest('.footer-main')) {
+                    } else if (this.closest('.footer-main')) {
                         buttonLocation = 'footer_main';
-                    } else if (link.closest('header')) {
+                    } else if (this.closest('header')) {
                         buttonLocation = 'header';
                     }
                     
-                    // Send event to GA4
-                    gtag('event', 'whatsapp_click', {
-                        'button_location': buttonLocation,
-                        'button_text': buttonText,
-                        'page_url': window.location.href
+                    console.log('Sending GA4 event - whatsapp_click:', {
+                        button_location: buttonLocation,
+                        button_text: buttonText
                     });
+                    
+                    // Send to GA4
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'whatsapp_click', {
+                            'button_location': buttonLocation,
+                            'button_text': buttonText,
+                            'page_url': window.location.href
+                        });
+                    } else {
+                        console.log('gtag not found');
+                    }
                 });
             });
         });
