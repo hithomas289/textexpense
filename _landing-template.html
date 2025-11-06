@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{PAGE_TITLE}} - TextExpense | {{PAGE_SUBTITLE}}</title>
+
+    <link rel="icon" type="image/png" href="../assets/te-logo.png">
+    <link rel="apple-touch-icon" href="../assets/te-logo.png">
+
+    <!-- SEO meta tags -->
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    <meta name="keywords" content="{{META_KEYWORDS}}">
+    <meta name="author" content="TextExpense">
+    <meta property="og:title" content="{{OG_TITLE}}">
+    <meta property="og:description" content="{{OG_DESCRIPTION}}">
+    <meta property="og:image" content="https://hithomas289.github.io/textexpense/te-logo.png">
+    <meta property="og:url" content="https://textexpense.com/{{PAGE_SLUG}}">
+    <meta property="og:type" content="website">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #075E54;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #e0e0e0;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 140px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--dark);
+        }
+
+        .hero .subheadline {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .cta-primary {
+            background: var(--primary);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Problem Section */
+        .problem {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .problem-card .emoji {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .problem-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .problem-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Solution Section */
+        .solution {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 100px 0;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .solution-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .solution-card .step-number {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .solution-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .solution-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .benefit-card {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .benefit-card .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .benefit-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 100px 0;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 0;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 25px 30px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--primary);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .footer-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-cta p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-cta .cta-button {
+            background: white;
+            color: var(--primary);
+            font-size: 1.1rem;
+            padding: 15px 30px;
+        }
+
+        .footer-cta .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                z-index: 999;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subheadline {
+                font-size: 1.1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .problem-grid,
+            .solution-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .cta-primary {
+                font-size: 1rem;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMSDHWE3BS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HMSDHWE3BS');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">
+                    <img src="../assets/te-logo.png" alt="TextExpense Logo" style="width: 40px; height: 40px;">
+                    TextExpense
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#problem">Problem</a></li>
+                    <li><a href="#solution">Solution</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+                <a href="https://wa.me/17654792054?text={{WHATSAPP_CTA_MESSAGE}}" class="cta-button">Get Started</a>
+                <button class="mobile-menu-btn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>{{HERO_HEADLINE}}</h1>
+            <p class="subheadline">{{HERO_SUBHEADLINE}}</p>
+            <a href="https://wa.me/17654792054?text={{WHATSAPP_CTA_MESSAGE}}" class="cta-primary">{{CTA_BUTTON_TEXT}}</a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem">
+        <div class="container">
+            <div class="section-header">
+                <h2>{{PROBLEM_SECTION_TITLE}}</h2>
+                <p>{{PROBLEM_SECTION_SUBTITLE}}</p>
+            </div>
+
+            <div class="problem-grid">
+                <!-- Problem Card 1 -->
+                <div class="problem-card">
+                    <div class="emoji">{{PROBLEM_1_EMOJI}}</div>
+                    <h3>{{PROBLEM_1_TITLE}}</h3>
+                    <p>{{PROBLEM_1_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Problem Card 2 -->
+                <div class="problem-card">
+                    <div class="emoji">{{PROBLEM_2_EMOJI}}</div>
+                    <h3>{{PROBLEM_2_TITLE}}</h3>
+                    <p>{{PROBLEM_2_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Problem Card 3 -->
+                <div class="problem-card">
+                    <div class="emoji">{{PROBLEM_3_EMOJI}}</div>
+                    <h3>{{PROBLEM_3_TITLE}}</h3>
+                    <p>{{PROBLEM_3_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Problem Card 4 (Optional - remove if not needed) -->
+                <div class="problem-card">
+                    <div class="emoji">{{PROBLEM_4_EMOJI}}</div>
+                    <h3>{{PROBLEM_4_TITLE}}</h3>
+                    <p>{{PROBLEM_4_DESCRIPTION}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution">
+        <div class="container">
+            <div class="section-header">
+                <h2>{{SOLUTION_SECTION_TITLE}}</h2>
+                <p>{{SOLUTION_SECTION_SUBTITLE}}</p>
+            </div>
+
+            <div class="solution-grid">
+                <!-- Solution Step 1 -->
+                <div class="solution-card">
+                    <div class="step-number">1</div>
+                    <h3>{{SOLUTION_STEP_1_TITLE}}</h3>
+                    <p>{{SOLUTION_STEP_1_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Solution Step 2 -->
+                <div class="solution-card">
+                    <div class="step-number">2</div>
+                    <h3>{{SOLUTION_STEP_2_TITLE}}</h3>
+                    <p>{{SOLUTION_STEP_2_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Solution Step 3 -->
+                <div class="solution-card">
+                    <div class="step-number">3</div>
+                    <h3>{{SOLUTION_STEP_3_TITLE}}</h3>
+                    <p>{{SOLUTION_STEP_3_DESCRIPTION}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2>{{BENEFITS_SECTION_TITLE}}</h2>
+                <p>{{BENEFITS_SECTION_SUBTITLE}}</p>
+            </div>
+
+            <div class="benefits-grid">
+                <!-- Benefit 1 -->
+                <div class="benefit-card">
+                    <div class="icon">{{BENEFIT_1_ICON}}</div>
+                    <h3>{{BENEFIT_1_TITLE}}</h3>
+                    <p>{{BENEFIT_1_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="benefit-card">
+                    <div class="icon">{{BENEFIT_2_ICON}}</div>
+                    <h3>{{BENEFIT_2_TITLE}}</h3>
+                    <p>{{BENEFIT_2_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="benefit-card">
+                    <div class="icon">{{BENEFIT_3_ICON}}</div>
+                    <h3>{{BENEFIT_3_TITLE}}</h3>
+                    <p>{{BENEFIT_3_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Benefit 4 (Optional - remove if not needed) -->
+                <div class="benefit-card">
+                    <div class="icon">{{BENEFIT_4_ICON}}</div>
+                    <h3>{{BENEFIT_4_TITLE}}</h3>
+                    <p>{{BENEFIT_4_DESCRIPTION}}</p>
+                </div>
+
+                <!-- Benefit 5 (Optional - remove if not needed) -->
+                <div class="benefit-card">
+                    <div class="icon">{{BENEFIT_5_ICON}}</div>
+                    <h3>{{BENEFIT_5_TITLE}}</h3>
+                    <p>{{BENEFIT_5_DESCRIPTION}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>{{FAQ_SECTION_TITLE}}</h2>
+            </div>
+
+            <div class="faq-container">
+                <!-- FAQ 1 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{FAQ_1_QUESTION}}</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{FAQ_1_ANSWER}}</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{FAQ_2_QUESTION}}</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{FAQ_2_ANSWER}}</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{FAQ_3_QUESTION}}</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{FAQ_3_ANSWER}}</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{FAQ_4_QUESTION}}</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{FAQ_4_ANSWER}}</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>{{FAQ_5_QUESTION}}</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{FAQ_5_ANSWER}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <div class="container">
+            <h2>{{FOOTER_CTA_TITLE}}</h2>
+            <p>{{FOOTER_CTA_SUBTITLE}}</p>
+            <a href="https://wa.me/17654792054?text={{WHATSAPP_CTA_MESSAGE}}" class="cta-button">{{CTA_BUTTON_TEXT}}</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TextExpense</h3>
+                    <p>The simplest way to manage receipts via WhatsApp. Never lose a receipt again.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="../index.html#solution">How It Works</a></li>
+                        <li><a href="../index.html#pricing">Pricing</a></li>
+                        <li><a href="../index.html#use-cases">Use Cases</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Get Started</h3>
+                    <p>Text your first receipt now:</p>
+                    <a href="https://wa.me/17654792054?text=hi" style="color: var(--primary); font-weight: 600;">📱 Start Free</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 TextExpense. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // Track WhatsApp clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+            whatsappLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'whatsapp_click', {
+                            'page_url': window.location.href,
+                            'page_title': document.title
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

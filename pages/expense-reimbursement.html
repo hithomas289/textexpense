@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Expense Reimbursement - TextExpense | Stop Leaving Your Own Money on the Table</title>
+
+    <link rel="icon" type="image/png" href="../assets/te-logo.png">
+    <link rel="apple-touch-icon" href="../assets/te-logo.png">
+
+    <!-- SEO meta tags -->
+    <meta name="description" content="Turn receipt photos into expense reports in minutes, not weekends. Text receipts via WhatsApp, get Excel reports, submit to your company, get paid back.">
+    <meta name="keywords" content="employee expense reimbursement, expense reports, business expenses, travel expenses, receipt tracking, expense management">
+    <meta name="author" content="TextExpense">
+    <meta property="og:title" content="Stop Leaving Your Own Money on the Table - Employee Expense Reimbursement">
+    <meta property="og:description" content="You spent it. You deserve it back. Turn receipt photos into expense reports in minutes via WhatsApp.">
+    <meta property="og:image" content="https://hithomas289.github.io/textexpense/te-logo.png">
+    <meta property="og:url" content="https://textexpense.com/expense-reimbursement">
+    <meta property="og:type" content="website">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #075E54;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #e0e0e0;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 140px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero .subheadline {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .hero-cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.3);
+        }
+
+        .trust-badge {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        /* Problem Section */
+        .problem-section {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .problem-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .problem-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 100px 0;
+        }
+
+        .solution-steps {
+            margin-top: 60px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 40px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: var(--gray);
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Money Recovery Section */
+        .money-recovery-section {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .money-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 40px auto 0;
+            border: 2px solid var(--primary);
+        }
+
+        .money-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .roi-text {
+            font-size: 1.3rem;
+            color: var(--dark);
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 100px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .author-title {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 0;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 25px 30px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Urgency Section */
+        .urgency-section {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            padding: 80px 0;
+        }
+
+        .urgency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .urgency-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .urgency-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--warning);
+        }
+
+        .urgency-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 60px auto 0;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 2px solid var(--border);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .price span {
+            font-size: 1.2rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .price-description {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            color: var(--gray);
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--primary);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .footer-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .footer-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-cta .cta-button {
+            font-size: 1.2rem;
+            padding: 18px 40px;
+            background: white;
+            color: var(--primary);
+        }
+
+        .footer-cta .trust-line {
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer-main {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        .footer-guarantees {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .footer-guarantees span {
+            color: #ccc;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subheadline {
+                font-size: 1.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .problem-grid,
+            .benefits-grid,
+            .testimonials-grid,
+            .urgency-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            /* Mobile Navigation */
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                z-index: 999;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            header .cta-button {
+                display: none;
+            }
+
+            .footer-guarantees {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .money-amount {
+                font-size: 2rem;
+            }
+
+            .roi-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-cta-button {
+                font-size: 16px;
+                padding: 15px 30px;
+            }
+
+            .step-item {
+                gap: 15px;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .money-amount {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMSDHWE3BS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HMSDHWE3BS');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">
+                    <img src="../assets/te-logo.png" alt="TextExpense Logo" style="width: 40px; height: 40px;">
+                    TextExpense
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#problem">Problem</a></li>
+                    <li><a href="#solution">Solution</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+                <a href="https://wa.me/17654792054?text=hi" class="cta-button">Start Free</a>
+                <button class="mobile-menu-btn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Stop Leaving Your Own Money<br><span class="highlight">on the Table</span></h1>
+            <p class="subheadline">You spent it. You deserve it back. Turn receipt photos into expense reports in minutes, not weekends.</p>
+            <p>Text your receipts via WhatsApp → Get Excel expense report → Submit to your company → Get paid back. No spreadsheets to build, no forms to fill out, no more excuses.</p>
+
+            <a href="https://wa.me/17654792054?text=hi" class="hero-cta-button">
+                📱 Process First Receipt FREE
+            </a>
+
+            <div class="trust-badge">
+                Trusted by thousands of employees who finally got reimbursed
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Real Cost of <span class="highlight">"I'll Do It Later"</span></h2>
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>Your Money Is Sitting There</h3>
+                    <p>You fronted $2,000 for client dinners, hotels, and Ubers. That's your money. But creating the expense report is so tedious that three months later, you still haven't gotten reimbursed. Some companies have 90-day submission limits—wait too long and that money is just gone.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>The Spreadsheet Standoff</h3>
+                    <p>Open Excel. Create columns. Type merchant name. Copy amount. Find date on crumpled receipt. Select category from dropdown. Repeat 47 times. It's boring, it's error-prone, and it's the reason you procrasticate submitting expenses even though it's literally free money.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>Receipt Scavenger Hunt</h3>
+                    <p>Half your receipts are wrinkled in your wallet. Some are in your email. A few are photographed on your phone. One is definitely in your laptop bag somewhere. Gathering everything into one place feels like a project, so you just... don't.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>Manager Rejection Loops</h3>
+                    <p>Submit a report with missing details or unclear categories? Your manager sends it back. Now you have to find that receipt again, fix the error, resubmit. One small mistake adds days to getting your reimbursement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Submit Expense Reports <span class="highlight">Without the Suffering</span></h2>
+            </div>
+
+            <div class="solution-steps">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Text Your Receipts</h3>
+                        <p>Got receipts in your wallet, car, email, or desk drawer? Just photograph them and text to our WhatsApp number. Do them all at once or send them as you get them throughout the month.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>We Build Your Report</h3>
+                        <p>Our system extracts merchant, date, amount, and category from every receipt. No typing. No spreadsheet building. No hunting for invoice numbers. We handle the tedious parts.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Download & Submit</h3>
+                        <p>Get a properly formatted Excel file that matches your company's expense report format. Upload it to your company portal, attach the receipt images, hit submit. Get your money back.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Employees <span class="highlight">Love This</span></h2>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Submit Same Day</h3>
+                    <p>Process months of backlogged receipts during your lunch break. What used to take a weekend now takes minutes. Submit today, get reimbursed this pay period instead of next quarter.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">✅</div>
+                    <h3>No More Rejection Loops</h3>
+                    <p>We extract every required field: merchant name, date, amount, category, invoice number. Your manager gets a complete report with nothing to send back for corrections. First-time approval becomes the norm.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏢</div>
+                    <h3>Works With Your Company System</h3>
+                    <p>Excel export works with any corporate expense system. We don't replace your company's process—we make it bearable.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔗</div>
+                    <h3>Receipt Images Included</h3>
+                    <p>Every row in your Excel report links to the original receipt image, properly compressed and stored. Your finance team wants proof? One click. Audit request? Already handled.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3>Mobile-First Reality</h3>
+                    <p>You're on the road. You're working from coffee shops. You're traveling for client meetings. You don't have time to sit at a desktop and build spreadsheets. Text-based processing fits how you actually work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Money Recovery Section -->
+    <section class="money-recovery-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Much Are You <span class="highlight">Leaving Unclaimed?</span></h2>
+            </div>
+
+            <div class="money-box">
+                <p style="font-size: 1.2rem; color: var(--gray); margin-bottom: 10px;">Simple Math</p>
+                <p style="font-size: 1.1rem; color: var(--dark);">Most people putting off expense reports have</p>
+                <div class="money-amount">$500-$2,000</div>
+                <p style="font-size: 1.1rem; color: var(--dark); margin-bottom: 20px;">sitting in unclaimed reimbursements.</p>
+
+                <p style="color: var(--gray); line-height: 1.7; margin-bottom: 20px;">Client lunches, rideshares, hotels, flights—it adds up fast when you're not submitting regularly.</p>
+
+                <div class="roi-text">Our service costs $4.99/month.</div>
+
+                <p style="color: var(--gray); line-height: 1.7; margin-top: 20px;">If you have even $200 in backlogged expenses, the ROI is instant. And you'll actually stay current going forward.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Road Warriors & <span class="highlight">Remote Workers Say</span></h2>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Had $1,800 in receipts I kept putting off. Used my lunch break to text them all, got my Excel report, submitted same day. Reimbursement hit my account the next pay period. Easiest money I ever recovered."
+                    </div>
+                    <div class="testimonial-author">
+                        <div>
+                            <div class="author-name">David P.</div>
+                            <div class="author-title">Sales Engineer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "I travel constantly for work. Before this, I'd submit expenses quarterly because creating the reports was torture. Now I text receipts from the airport and stay current. Haven't had a rejection in 6 months."
+                    </div>
+                    <div class="testimonial-author">
+                        <div>
+                            <div class="author-name">Amanda F.</div>
+                            <div class="author-title">Consultant</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "My company requires itemized receipts and specific categories. Used to take me forever to build compliant reports. Now it's minutes. My Friday afternoons are mine again."
+                    </div>
+                    <div class="testimonial-author">
+                        <div>
+                            <div class="author-name">James L.</div>
+                            <div class="author-title">Field Service Rep</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2><span class="highlight">Reimbursement</span> Questions Answered</h2>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Will this work with my company's expense system?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. We export standard Excel files that work with any corporate expense platform. If your company uses paper forms, you can print the report directly.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What if I have months of backlogged receipts?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Perfect use case. Text them all over a lunch break. We'll organize them chronologically and categorize them properly. Most users clear months of backlog in minutes.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I submit receipts from my email/online orders?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. Forward confirmation emails to yourself, screenshot them, and text the image. Or download PDFs and send them. We process any receipt format.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What if my company has specific category requirements?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can edit any field before downloading your report. We suggest categories based on the merchant, but you have full control to match your company's exact requirements.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How fast can I actually get reimbursed?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>That depends on your company's approval process, but you can submit your report the same day you process receipts with us. Most companies process approved reports within 1-2 pay periods.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section class="urgency-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Every Day You Wait <span style="color: var(--warning);">Costs You</span></h2>
+            </div>
+
+            <div class="urgency-grid">
+                <div class="urgency-card">
+                    <h3>Submission Deadlines Are Real</h3>
+                    <p>Many companies have 60-90 day submission windows. Wait too long and your reimbursement becomes ineligible. That client dinner from 89 days ago? You're about to eat that cost permanently if you don't submit this week.</p>
+                </div>
+
+                <div class="urgency-card">
+                    <h3>Your Cash Flow Matters</h3>
+                    <p>You fronted that money. Your credit card is carrying that balance. The longer you wait to get reimbursed, the longer you're essentially giving your employer an interest-free loan of your own money.</p>
+                </div>
+
+                <div class="urgency-card">
+                    <h3>The Pile Only Gets Bigger</h3>
+                    <p>Every business trip adds receipts. Every client meeting adds expenses. The longer you procrastinate, the more overwhelming the backlog becomes. Start now and stay current instead of facing a quarterly nightmare.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Faster Reimbursement for <span class="highlight">Less Than Lunch</span></h2>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Light Plan</h3>
+                    <div class="price">$2.99<span>/month</span></div>
+                    <p class="price-description">Great for occasional business expenses</p>
+                    <ul class="pricing-features">
+                        <li>6 receipts per month</li>
+                        <li>WhatsApp-based processing (works from anywhere)</li>
+                        <li>Excel reports ready for company systems</li>
+                        <li>Automatic categorization</li>
+                        <li>Receipt image backup and linking</li>
+                        <li>Multi-month report generation</li>
+                        <li>Edit any field before export</li>
+                        <li>Cancel anytime</li>
+                    </ul>
+                    <a href="https://wa.me/17654792054?text=hi" class="cta-button" style="width: 100%; text-align: center;">Get Started</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3>Pro Plan</h3>
+                    <div class="price">$4.99<span>/month</span></div>
+                    <p class="price-description">Perfect for regular travelers and client-facing roles</p>
+                    <ul class="pricing-features">
+                        <li>25 receipts per month</li>
+                        <li>Everything in Light, plus:</li>
+                        <li>Priority processing</li>
+                        <li>Advanced Excel reports</li>
+                        <li>Custom categories</li>
+                        <li>6 months receipt storage</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="https://wa.me/17654792054?text=hi" class="cta-button" style="width: 100%; text-align: center;">Get Started</a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 10px;">ROI Reality Check</p>
+                <p style="color: var(--gray); font-size: 1.1rem;">If you have $500+ in unclaimed expenses sitting around, this pays for itself in month one. Forever.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <div class="container">
+            <h2>Get Your Money Back This Week</h2>
+            <p>Process your first receipt right now for free. Watch it become a proper expense report entry in 30 seconds. Then do the rest of your backlog and finally submit for that reimbursement check.</p>
+
+            <a href="https://wa.me/17654792054?text=hi" class="cta-button">📱 Start FREE - Get Reimbursed</a>
+
+            <div class="trust-line">
+                Your receipts. Your money. Finally claimed.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-main">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TextExpense</h3>
+                    <p>The simplest way to manage receipts via WhatsApp. Never lose a receipt again.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#solution">How It Works</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Get Started</h3>
+                    <p>Text your first receipt now:</p>
+                    <a href="https://wa.me/17654792054?text=hi" class="cta-button" style="margin-top: 15px;">Start Free</a>
+                </div>
+            </div>
+
+            <div class="footer-guarantees">
+                <span>✓ No app to download</span>
+                <span>✓ Works via WhatsApp</span>
+                <span>✓ Company-compliant Excel exports</span>
+                <span>✓ Cancel anytime</span>
+                <span>✓ Secure & encrypted</span>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 TextExpense. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.querySelector('.nav-links');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Track WhatsApp clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+
+            whatsappLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    let buttonText = this.textContent.trim();
+                    let buttonLocation = 'unknown';
+
+                    if (this.closest('.hero')) {
+                        buttonLocation = 'hero';
+                    } else if (this.closest('.footer-cta')) {
+                        buttonLocation = 'footer_cta';
+                    } else if (this.closest('.footer-main')) {
+                        buttonLocation = 'footer_main';
+                    } else if (this.closest('.pricing-section')) {
+                        buttonLocation = 'pricing';
+                    } else if (this.closest('header')) {
+                        buttonLocation = 'header';
+                    }
+
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'whatsapp_click', {
+                            'button_location': buttonLocation,
+                            'button_text': buttonText,
+                            'page_url': window.location.href,
+                            'page_type': 'expense_reimbursement_landing'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

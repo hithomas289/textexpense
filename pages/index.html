@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solutions - TextExpense | Receipt Management for Every Use Case</title>
+
+    <link rel="icon" type="image/png" href="../assets/te-logo.png">
+    <link rel="apple-touch-icon" href="../assets/te-logo.png">
+
+    <meta name="description" content="Explore TextExpense solutions for tax receipts, employee reimbursements, small business accounting, and warranty management. Simple WhatsApp-based receipt organization.">
+    <meta name="keywords" content="receipt management, tax receipts, expense reimbursement, small business accounting, warranty receipts">
+    <meta property="og:title" content="TextExpense Solutions - Receipt Management for Every Need">
+    <meta property="og:description" content="Discover how TextExpense can help you organize receipts for taxes, reimbursements, accounting, and warranties.">
+    <meta property="og:image" content="https://hithomas289.github.io/textexpense/te-logo.png">
+    <meta property="og:url" content="https://textexpense.com/pages">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #075E54;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #e0e0e0;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 140px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* Solutions Grid */
+        .solutions {
+            padding: 80px 0;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .solution-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .solution-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .solution-card h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .solution-card p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .solution-benefits {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .solution-benefits li {
+            padding: 8px 0;
+            color: var(--gray);
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .solution-benefits li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .learn-more {
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 15px;
+            transition: gap 0.3s ease;
+        }
+
+        .solution-card:hover .learn-more {
+            gap: 10px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--primary);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-section .cta-button {
+            background: white;
+            color: var(--primary);
+            font-size: 1.1rem;
+            padding: 15px 35px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                z-index: 999;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 100px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .solution-card {
+                padding: 30px;
+            }
+        }
+    </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMSDHWE3BS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HMSDHWE3BS');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">
+                    <img src="../assets/te-logo.png" alt="TextExpense Logo" style="width: 40px; height: 40px;">
+                    TextExpense
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#solution">How It Works</a></li>
+                    <li><a href="./index.html">Solutions</a></li>
+                    <li><a href="../index.html#pricing">Pricing</a></li>
+                </ul>
+                <a href="https://wa.me/17654792054?text=hi" class="cta-button">Get Started</a>
+                <button class="mobile-menu-btn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Receipt Management Solutions for Every Need</h1>
+            <p>From tax deductions to warranty claims, TextExpense has you covered. Choose the solution that fits your needs.</p>
+        </div>
+    </section>
+
+    <!-- Solutions Grid -->
+    <section class="solutions">
+        <div class="container">
+            <div class="solutions-grid">
+                <!-- Tax Receipts -->
+                <a href="./tax-receipts.html" class="solution-card">
+                    <span class="solution-icon">📊</span>
+                    <h2>Tax Receipt Organization</h2>
+                    <p>Turn receipt chaos into tax-ready Excel reports. Perfect for small business owners, freelancers, and anyone who wants to maximize their tax deductions.</p>
+                    <ul class="solution-benefits">
+                        <li>IRS-compliant organization</li>
+                        <li>Accountant-ready reports</li>
+                        <li>Multi-month tracking</li>
+                        <li>Never miss a deduction</li>
+                    </ul>
+                    <span class="learn-more">Learn More →</span>
+                </a>
+
+                <!-- Employee Expense Reimbursement -->
+                <a href="./expense-reimbursement.html" class="solution-card">
+                    <span class="solution-icon">✈️</span>
+                    <h2>Employee Expense Reimbursement</h2>
+                    <p>Stop losing money on business expenses. Track travel, meals, and purchases instantly. Get reimbursed faster with organized reports.</p>
+                    <ul class="solution-benefits">
+                        <li>Instant expense tracking</li>
+                        <li>Trip-based organization</li>
+                        <li>One-click submissions</li>
+                        <li>Recover $500-$2,000 annually</li>
+                    </ul>
+                    <span class="learn-more">Learn More →</span>
+                </a>
+
+                <!-- Small Business Accounting -->
+                <a href="./small-business-accounting.html" class="solution-card">
+                    <span class="solution-icon">💼</span>
+                    <h2>Small Business Accounting</h2>
+                    <p>Keep your books tax-ready without the headache. Professional expense tracking that your accountant and CPA will love.</p>
+                    <ul class="solution-benefits">
+                        <li>QuickBooks-ready exports</li>
+                        <li>Quarterly reports</li>
+                        <li>Category management</li>
+                        <li>Save 10+ hours monthly</li>
+                    </ul>
+                    <span class="learn-more">Learn More →</span>
+                </a>
+
+                <!-- Warranty & Returns -->
+                <a href="./warranty-returns.html" class="solution-card">
+                    <span class="solution-icon">🔖</span>
+                    <h2>Warranty & Return Receipt</h2>
+                    <p>Never lose a warranty or miss a return window again. Find any receipt in 5 seconds. Save hundreds on warranty claims.</p>
+                    <ul class="solution-benefits">
+                        <li>Instant receipt search</li>
+                        <li>Warranty expiration alerts</li>
+                        <li>Return window tracking</li>
+                        <li>Insurance claim ready</li>
+                    </ul>
+                    <span class="learn-more">Learn More →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Get Started?</h2>
+            <p>No app downloads. No complicated setup. Just text your receipts and get organized.</p>
+            <a href="https://wa.me/17654792054?text=hi" class="cta-button">📱 Start Free on WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TextExpense</h3>
+                    <p>The simplest way to manage receipts via WhatsApp. Never lose a receipt again.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="../index.html#solution">How It Works</a></li>
+                        <li><a href="../index.html#pricing">Pricing</a></li>
+                        <li><a href="../index.html#use-cases">Use Cases</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Solutions</h3>
+                    <ul>
+                        <li><a href="./tax-receipts.html">Tax Receipt Organization</a></li>
+                        <li><a href="./expense-reimbursement.html">Expense Reimbursement</a></li>
+                        <li><a href="./small-business-accounting.html">Business Accounting</a></li>
+                        <li><a href="./warranty-returns.html">Warranty & Returns</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 TextExpense. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Receipt Organization - TextExpense | Turn Receipt Chaos Into Tax-Ready Excel Reports</title>
+
+    <link rel="icon" type="image/png" href="../assets/te-logo.png">
+    <link rel="apple-touch-icon" href="../assets/te-logo.png">
+
+    <!-- SEO meta tags -->
+    <meta name="description" content="Stop stressing about lost receipts and hours of manual entry. Text your receipts via WhatsApp, get organized spreadsheets instantly. Your accountant will thank you.">
+    <meta name="keywords" content="tax receipt organization, tax deductions, receipt management, small business taxes, freelancer tax receipts, expense tracking">
+    <meta name="author" content="TextExpense">
+    <meta property="og:title" content="Turn Your Receipt Chaos Into Tax-Ready Excel Reports">
+    <meta property="og:description" content="Text your receipts, get organized spreadsheets instantly. No app downloads. No data entry. No headaches.">
+    <meta property="og:image" content="https://hithomas289.github.io/textexpense/te-logo.png">
+    <meta property="og:url" content="https://textexpense.com/tax-receipts">
+    <meta property="og:type" content="website">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #075E54;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #e0e0e0;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 140px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero .subheadline {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .hero-cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.3);
+        }
+
+        .trust-badge {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        /* Problem Section */
+        .problem-section {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .problem-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .problem-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 100px 0;
+        }
+
+        .solution-steps {
+            margin-top: 60px;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 40px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: var(--gray);
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+            padding: 100px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .testimonial-quote {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--dark);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .author-title {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            margin-top: 60px;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 0;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 25px 30px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Urgency Section */
+        .urgency-section {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            padding: 80px 0;
+        }
+
+        .urgency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .urgency-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .urgency-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--warning);
+        }
+
+        .urgency-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: #fff;
+            padding: 100px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 60px auto 0;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 2px solid var(--border);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .price span {
+            font-size: 1.2rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .price-description {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            color: var(--gray);
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--primary);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .footer-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .footer-cta p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-cta .cta-button {
+            font-size: 1.2rem;
+            padding: 18px 40px;
+            background: white;
+            color: var(--primary);
+        }
+
+        .footer-cta .trust-line {
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer-main {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        .footer-guarantees {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .footer-guarantees span {
+            color: #ccc;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subheadline {
+                font-size: 1.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .problem-grid,
+            .benefits-grid,
+            .testimonials-grid,
+            .urgency-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            /* Mobile Navigation */
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                z-index: 999;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            header .cta-button {
+                display: none;
+            }
+
+            .footer-guarantees {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-cta-button {
+                font-size: 16px;
+                padding: 15px 30px;
+            }
+
+            .step-item {
+                gap: 15px;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMSDHWE3BS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HMSDHWE3BS');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">
+                    <img src="../assets/te-logo.png" alt="TextExpense Logo" style="width: 40px; height: 40px;">
+                    TextExpense
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#problem">Problem</a></li>
+                    <li><a href="#solution">Solution</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+                <a href="https://wa.me/17654792054?text=hi" class="cta-button">Start Free</a>
+                <button class="mobile-menu-btn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Turn Your Receipt Chaos Into<br><span class="highlight">Tax-Ready Excel Reports</span></h1>
+            <p class="subheadline">Stop stressing about lost receipts and hours of manual entry. Text your receipts, get organized spreadsheets instantly—your accountant will thank you.</p>
+            <p>No app downloads. No data entry. No headaches. Just send receipt photos via WhatsApp and get professional Excel reports with every detail extracted and categorized.</p>
+
+            <a href="https://wa.me/17654792054?text=hi" class="hero-cta-button">
+                📱 Try Your First Receipt FREE
+            </a>
+
+            <div class="trust-badge">
+                Join thousands who've already organized their tax receipts the smart way
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Receipt Problem That <span class="highlight">Costs You Money</span></h2>
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>Missing Deductions</h3>
+                    <p>That coffee receipt from the client meeting? The office supply run? The business lunch? Each missing receipt is money left on the table. The average small business owner loses $2,000+ in deductions annually from poor receipt organization.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>Manual Entry Hell</h3>
+                    <p>Typing merchant names, dates, amounts, and categories from crumpled receipts takes 3-5 minutes per receipt. With 200 receipts, that's 10+ hours of mind-numbing data entry—time you could spend actually running your business.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>Accountant Delays</h3>
+                    <p>Showing up to your tax appointment with a shoebox of receipts means paying your accountant extra to organize them, or worse—extensions and rushed filings that miss optimization opportunities.</p>
+                </div>
+
+                <div class="problem-card">
+                    <h3>The Audit Risk</h3>
+                    <p>When the IRS asks for proof, "I think I have that receipt somewhere" doesn't cut it. Without organized, accessible records, even legitimate deductions become risky to claim.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Receipt Organization That <span class="highlight">Actually Works</span></h2>
+            </div>
+
+            <div class="solution-steps">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Text Your Receipt</h3>
+                        <p>Open WhatsApp, send a photo of any receipt to our number. Works with restaurant receipts, gas stations, online order confirmations, invoices—anything with transaction details.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>We Extract Everything</h3>
+                        <p>Our system reads every detail: merchant name, date, amount, tax, invoice number. No manual typing, no mistakes, no missed information.</p>
+                    </div>
+                </div>
+
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Get Your Excel Report</h3>
+                        <p>Download a professional spreadsheet organized by month and category, with direct links to every original receipt image. Ready for your accountant or tax software immediately.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Tax Professionals <span class="highlight">Recommend Us</span></h2>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <h3>Accountant-Ready Format</h3>
+                    <p>Your CPA doesn't want photos. They want organized data in Excel with clear categories and supporting documentation. That's exactly what you'll hand them—saving time and reducing their fees.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔗</div>
+                    <h3>Every Receipt Backed Up</h3>
+                    <p>Each Excel entry links directly to the original receipt image, compressed and stored securely. When you need proof for an audit or return, it's one click away. No more digging through email or filing cabinets.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">📁</div>
+                    <h3>Categories That Match Your Return</h3>
+                    <p>Business meals, travel expenses, office supplies, equipment purchases—we organize by the categories your tax forms actually use, not arbitrary buckets you have to translate later.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">📅</div>
+                    <h3>Multi-Month Reports</h3>
+                    <p>Generate reports for any time period: quarterly, annually, or custom ranges. Perfect for estimated tax payments, year-end filing, or reviewing spending patterns.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">💬</div>
+                    <h3>Text Message Simplicity</h3>
+                    <p>While other tools require app downloads, account setup, and training, you already know how to send a text message. The learning curve is zero, the time investment is zero.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Small Business Owners & <span class="highlight">Freelancers Say</span></h2>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "Saved me 8 hours before my tax appointment. Sent 6 months of receipts over my lunch break, got back a perfectly organized Excel file my accountant could use immediately."
+                    </div>
+                    <div class="testimonial-author">
+                        <div>
+                            <div class="author-name">Sarah Chen</div>
+                            <div class="author-title">Marketing Consultant</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "As a freelancer, tracking business expenses was my least favorite task. Now I just text receipts the moment I get them. Come tax time, everything's already organized."
+                    </div>
+                    <div class="testimonial-author">
+                        <div>
+                            <div class="author-name">Marcus Rodriguez</div>
+                            <div class="author-title">Graphic Designer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-quote">
+                        "My accountant actually complimented me on my record-keeping this year. First time that's happened in 12 years of business."
+                    </div>
+                    <div class="testimonial-author">
+                        <div>
+                            <div class="author-name">Jennifer Walsh</div>
+                            <div class="author-title">Interior Designer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Common Questions About <span class="highlight">Receipt Organization</span></h2>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What if I have months of backlogged receipts?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Each receipt gets processed individually and organized chronologically in your reports. Most users catch up on 3-6 months of receipts in under an hour.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can my accountant work with the Excel files?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. We use standard Excel format (.xlsx) that opens in Excel, Google Sheets, or any accounting software. Your accountant can import it directly into their systems or review it as-is.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What if a receipt is unclear or damaged?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our system will show you what it extracted and ask you to verify or correct any unclear information. You can also manually enter details for badly faded receipts while still storing the image for your records.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How long do you keep my receipt images?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Receipt images are stored securely and linked in your Excel reports. They remain accessible as long as you have an active account, giving you permanent backup of your documentation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is this secure enough for financial documents?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. All data is encrypted in transit and at rest. We never see your bank accounts or payment information—just the receipt images you choose to send us.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgency Section -->
+    <section class="urgency-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>The Cost of <span style="color: var(--warning);">Waiting</span></h2>
+            </div>
+
+            <div class="urgency-grid">
+                <div class="urgency-card">
+                    <h3>Every Day of Disorganization Costs You</h3>
+                    <p>The longer you wait to organize receipts, the more fade, get lost, or become illegible. Digital backup now means proof later—waiting means potential deductions disappear forever.</p>
+                </div>
+
+                <div class="urgency-card">
+                    <h3>Your Time is Expensive</h3>
+                    <p>If you bill at $50/hour, spending 10 hours manually entering receipt data costs you $500 in lost work time. Our service pays for itself with the first report you generate.</p>
+                </div>
+
+                <div class="urgency-card">
+                    <h3>Tax Season Rushes Are Painful</h3>
+                    <p>The week before your tax appointment shouldn't be a panic. Stay organized year-round and tax filing becomes a non-event instead of a crisis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Transparent Pricing, <span class="highlight">Zero Contracts</span></h2>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Light Plan</h3>
+                    <div class="price">$2.99<span>/month</span></div>
+                    <p class="price-description">Perfect for light business use or personal expense tracking</p>
+                    <ul class="pricing-features">
+                        <li>6 receipts per month</li>
+                        <li>Professional Excel reports</li>
+                        <li>Automatic categorization</li>
+                        <li>Receipt image backup with download links</li>
+                        <li>Multi-month report generation</li>
+                        <li>Works with any accounting software</li>
+                        <li>Cancel anytime, no contracts</li>
+                    </ul>
+                    <a href="https://wa.me/17654792054?text=hi" class="cta-button" style="width: 100%; text-align: center;">Get Started</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3>Pro Plan</h3>
+                    <div class="price">$4.99<span>/month</span></div>
+                    <p class="price-description">Ideal for freelancers, consultants, and small business owners</p>
+                    <ul class="pricing-features">
+                        <li>25 receipts per month</li>
+                        <li>Everything in Light, plus:</li>
+                        <li>Advanced Excel reports</li>
+                        <li>Custom categories</li>
+                        <li>Priority processing</li>
+                        <li>6 months receipt storage</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="https://wa.me/17654792054?text=hi" class="cta-button" style="width: 100%; text-align: center;">Get Started</a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; color: var(--gray);">
+                <p style="font-size: 1.1rem; font-weight: 600;">Try Your First Receipt FREE</p>
+                <p>No credit card required, no commitment, no catch.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <div class="container">
+            <h2>Stop Dreading Tax Organization</h2>
+            <p>Process your first receipt right now, completely free. See your receipt turn into a professional Excel entry in 30 seconds. No setup, no credit card, just results.</p>
+
+            <a href="https://wa.me/17654792054?text=hi" class="cta-button">📱 Get Started FREE</a>
+
+            <div class="trust-line">
+                Takes 30 seconds to try. Could save you 10+ hours of data entry.
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-main">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TextExpense</h3>
+                    <p>The simplest way to manage receipts via WhatsApp. Never lose a receipt again.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="#solution">How It Works</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Get Started</h3>
+                    <p>Text your first receipt now:</p>
+                    <a href="https://wa.me/17654792054?text=hi" class="cta-button" style="margin-top: 15px;">Start Free</a>
+                </div>
+            </div>
+
+            <div class="footer-guarantees">
+                <span>✓ No app download required</span>
+                <span>✓ Works on any phone</span>
+                <span>✓ Cancel anytime</span>
+                <span>✓ Secure & encrypted</span>
+                <span>✓ GDPR compliant</span>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 TextExpense. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.querySelector('.nav-links');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                const isActive = faqItem.classList.contains('active');
+
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Track WhatsApp clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+
+            whatsappLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    let buttonText = this.textContent.trim();
+                    let buttonLocation = 'unknown';
+
+                    if (this.closest('.hero')) {
+                        buttonLocation = 'hero';
+                    } else if (this.closest('.footer-cta')) {
+                        buttonLocation = 'footer_cta';
+                    } else if (this.closest('.footer-main')) {
+                        buttonLocation = 'footer_main';
+                    } else if (this.closest('.pricing-section')) {
+                        buttonLocation = 'pricing';
+                    } else if (this.closest('header')) {
+                        buttonLocation = 'header';
+                    }
+
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'whatsapp_click', {
+                            'button_location': buttonLocation,
+                            'button_text': buttonText,
+                            'page_url': window.location.href,
+                            'page_type': 'tax_receipts_landing'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
