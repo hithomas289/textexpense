@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ARTICLE_TITLE}} | TextExpense Blog</title>
+
+    <link rel="icon" type="image/png" href="../assets/te-logo.png">
+    <link rel="apple-touch-icon" href="../assets/te-logo.png">
+
+    <!-- SEO meta tags -->
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    <meta name="keywords" content="{{META_KEYWORDS}}">
+    <meta name="author" content="{{AUTHOR_NAME}}">
+    <meta property="og:title" content="{{ARTICLE_TITLE}}">
+    <meta property="og:description" content="{{META_DESCRIPTION}}">
+    <meta property="og:image" content="{{ARTICLE_IMAGE_URL}}">
+    <meta property="og:url" content="https://textexpense.com/blog/{{ARTICLE_SLUG}}">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="{{PUBLISH_DATE}}">
+    <meta property="article:author" content="{{AUTHOR_NAME}}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ARTICLE_TITLE}}">
+    <meta name="twitter:description" content="{{META_DESCRIPTION}}">
+    <meta name="twitter:image" content="{{ARTICLE_IMAGE_URL}}">
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "{{ARTICLE_TITLE}}",
+        "description": "{{META_DESCRIPTION}}",
+        "image": "{{ARTICLE_IMAGE_URL}}",
+        "author": {
+            "@type": "Person",
+            "name": "{{AUTHOR_NAME}}"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "TextExpense",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://hithomas289.github.io/textexpense/te-logo.png"
+            }
+        },
+        "datePublished": "{{PUBLISH_DATE}}",
+        "dateModified": "{{MODIFIED_DATE}}",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://textexpense.com/blog/{{ARTICLE_SLUG}}"
+        }
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #075E54;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border: #e0e0e0;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Article Header */
+        .article-header {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .article-title {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .article-excerpt {
+            font-size: 1.3rem;
+            color: var(--gray);
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        /* Article Content */
+        .article-content {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            color: var(--dark);
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 30px 0 15px;
+            color: var(--dark);
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--primary);
+            padding: 20px 30px;
+            margin: 30px 0;
+            background: var(--light);
+            font-style: italic;
+            color: var(--gray);
+        }
+
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .article-content a {
+            color: var(--primary);
+            text-decoration: none;
+            border-bottom: 1px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .article-content a:hover {
+            color: var(--primary-dark);
+            border-bottom-color: var(--primary-dark);
+        }
+
+        .article-content code {
+            background: var(--light);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .article-content pre {
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        .article-content pre code {
+            background: none;
+            padding: 0;
+            color: white;
+        }
+
+        /* CTA Box */
+        .article-cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            margin: 40px 0;
+        }
+
+        .article-cta h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: white !important;
+        }
+
+        .article-cta p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--primary);
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Author Box */
+        .author-box {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 60px 0;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .author-info h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .author-info p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Related Articles */
+        .related-articles {
+            background: var(--light);
+            padding: 60px 0;
+        }
+
+        .related-articles h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--dark);
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .related-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .related-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .related-card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .related-card a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            text-align: center;
+            color: #ccc;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                z-index: 999;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .article-header {
+                padding: 100px 0 40px;
+            }
+
+            .article-title {
+                font-size: 2rem;
+            }
+
+            .article-excerpt {
+                font-size: 1.1rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.6rem;
+            }
+
+            .article-content h3 {
+                font-size: 1.3rem;
+            }
+
+            .author-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-title {
+                font-size: 1.75rem;
+            }
+
+            .article-content {
+                font-size: 0.95rem;
+            }
+
+            .article-cta {
+                padding: 25px 20px;
+            }
+
+            .article-cta h3 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMSDHWE3BS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-HMSDHWE3BS');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="logo">
+                    <img src="../assets/te-logo.png" alt="TextExpense Logo" style="width: 40px; height: 40px;">
+                    TextExpense
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../index.html#solution">How It Works</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../index.html#pricing">Pricing</a></li>
+                </ul>
+                <button class="mobile-menu-btn">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Header -->
+    <section class="article-header">
+        <div class="container">
+            <div class="article-meta">
+                <span>📅 {{PUBLISH_DATE_FORMATTED}}</span>
+                <span>👤 {{AUTHOR_NAME}}</span>
+                <span>⏱️ {{READ_TIME}} min read</span>
+            </div>
+            <h1 class="article-title">{{ARTICLE_TITLE}}</h1>
+            <p class="article-excerpt">{{ARTICLE_EXCERPT}}</p>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="article-content">
+        <!-- CONTENT START - Replace everything between these comments with your article content -->
+
+        <h2>{{SECTION_1_TITLE}}</h2>
+        <p>{{SECTION_1_PARAGRAPH_1}}</p>
+        <p>{{SECTION_1_PARAGRAPH_2}}</p>
+
+        <h2>{{SECTION_2_TITLE}}</h2>
+        <p>{{SECTION_2_PARAGRAPH_1}}</p>
+
+        <ul>
+            <li>{{SECTION_2_BULLET_1}}</li>
+            <li>{{SECTION_2_BULLET_2}}</li>
+            <li>{{SECTION_2_BULLET_3}}</li>
+        </ul>
+
+        <h2>{{SECTION_3_TITLE}}</h2>
+        <p>{{SECTION_3_PARAGRAPH_1}}</p>
+
+        <blockquote>
+            {{BLOCKQUOTE_TEXT}}
+        </blockquote>
+
+        <h2>{{SECTION_4_TITLE}}</h2>
+        <p>{{SECTION_4_PARAGRAPH_1}}</p>
+
+        <!-- CTA Box -->
+        <div class="article-cta">
+            <h3>{{CTA_TITLE}}</h3>
+            <p>{{CTA_DESCRIPTION}}</p>
+            <a href="https://wa.me/17654792054?text=hi" class="cta-button">📱 Get Started Free</a>
+        </div>
+
+        <h2>{{SECTION_5_TITLE}}</h2>
+        <p>{{SECTION_5_PARAGRAPH_1}}</p>
+        <p>{{SECTION_5_PARAGRAPH_2}}</p>
+
+        <h2>{{CONCLUSION_TITLE}}</h2>
+        <p>{{CONCLUSION_PARAGRAPH}}</p>
+
+        <!-- CONTENT END -->
+
+        <!-- Author Box -->
+        <div class="author-box">
+            <div class="author-avatar">{{AUTHOR_INITIALS}}</div>
+            <div class="author-info">
+                <h4>{{AUTHOR_NAME}}</h4>
+                <p>{{AUTHOR_BIO}}</p>
+            </div>
+        </div>
+    </article>
+
+    <!-- Related Articles (Optional - can be removed) -->
+    <section class="related-articles">
+        <div class="container">
+            <h2>Related Articles</h2>
+            <div class="related-grid">
+                <div class="related-card">
+                    <h3>{{RELATED_1_TITLE}}</h3>
+                    <p>{{RELATED_1_EXCERPT}}</p>
+                    <a href="{{RELATED_1_URL}}">Read More →</a>
+                </div>
+
+                <div class="related-card">
+                    <h3>{{RELATED_2_TITLE}}</h3>
+                    <p>{{RELATED_2_EXCERPT}}</p>
+                    <a href="{{RELATED_2_URL}}">Read More →</a>
+                </div>
+
+                <div class="related-card">
+                    <h3>{{RELATED_3_TITLE}}</h3>
+                    <p>{{RELATED_3_EXCERPT}}</p>
+                    <a href="{{RELATED_3_URL}}">Read More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>TextExpense</h3>
+                    <p>The simplest way to manage receipts via WhatsApp. Never lose a receipt again.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="../index.html#solution">How It Works</a></li>
+                        <li><a href="../index.html#pricing">Pricing</a></li>
+                        <li><a href="../index.html#use-cases">Use Cases</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="../blog/index.html">Blog</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Get Started</h3>
+                    <p>Text your first receipt now:</p>
+                    <a href="https://wa.me/17654792054?text=hi" style="color: var(--primary); font-weight: 600;">📱 Start Free</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 TextExpense. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // Track WhatsApp clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+            whatsappLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'whatsapp_click', {
+                            'page_url': window.location.href,
+                            'page_title': document.title,
+                            'source': 'blog_article'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
