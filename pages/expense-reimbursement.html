@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Small Business Accounting - TextExpense | Turn Receipt Photos Into Tax-Ready Books</title>
+    <title>Employee Expense Reimbursement - TextExpense | Stop Leaving Your Own Money on the Table</title>
 
-    <link rel="icon" type="image/png" href="./te-logo.png">
-    <link rel="apple-touch-icon" href="./te-logo.png">
+    <link rel="icon" type="image/png" href="../assets/te-logo.png">
+    <link rel="apple-touch-icon" href="../assets/te-logo.png">
 
     <!-- SEO meta tags -->
-    <meta name="description" content="Text receipts, get organized Excel reports, never miss deductions. Your accountant will finally stop asking where your records are.">
-    <meta name="keywords" content="small business accounting, bookkeeping, tax deductions, receipt tracking, business expenses, QuickBooks, accounting software">
+    <meta name="description" content="Turn receipt photos into expense reports in minutes, not weekends. Text receipts via WhatsApp, get Excel reports, submit to your company, get paid back.">
+    <meta name="keywords" content="employee expense reimbursement, expense reports, business expenses, travel expenses, receipt tracking, expense management">
     <meta name="author" content="TextExpense">
-    <meta property="og:title" content="Turn Receipt Photos Into Tax-Ready Books - Small Business Accounting">
-    <meta property="og:description" content="Text receipts via WhatsApp, get organized Excel reports. Perfect for small businesses and accountants.">
+    <meta property="og:title" content="Stop Leaving Your Own Money on the Table - Employee Expense Reimbursement">
+    <meta property="og:description" content="You spent it. You deserve it back. Turn receipt photos into expense reports in minutes via WhatsApp.">
     <meta property="og:image" content="https://hithomas289.github.io/textexpense/te-logo.png">
-    <meta property="og:url" content="https://textexpense.com/small-business-accounting">
+    <meta property="og:url" content="https://textexpense.com/expense-reimbursement">
     <meta property="og:type" content="website">
 
     <style>
@@ -154,11 +154,17 @@
         }
 
         .hero .subheadline {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
             color: var(--gray);
             margin-bottom: 40px;
-            font-weight: 500;
-            max-width: 800px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -189,7 +195,6 @@
             color: var(--gray);
             font-size: 1rem;
             margin-top: 20px;
-            font-weight: 600;
         }
 
         /* Problem Section */
@@ -211,7 +216,7 @@
 
         .problem-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             margin-top: 40px;
         }
@@ -326,6 +331,37 @@
         .benefit-card p {
             color: var(--gray);
             line-height: 1.7;
+        }
+
+        /* Money Recovery Section */
+        .money-recovery-section {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .money-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 40px auto 0;
+            border: 2px solid var(--primary);
+        }
+
+        .money-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .roi-text {
+            font-size: 1.3rem;
+            color: var(--dark);
+            font-weight: 600;
+            margin-top: 20px;
         }
 
         /* Testimonials */
@@ -576,21 +612,6 @@
             font-size: 1.2rem;
         }
 
-        .roi-callout {
-            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            margin-top: 40px;
-            border: 2px solid var(--primary);
-        }
-
-        .roi-callout p {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
         /* Footer CTA */
         .footer-cta {
             background: var(--primary);
@@ -705,7 +726,11 @@
             }
 
             .hero .subheadline {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
             }
 
             .section-header h2 {
@@ -758,6 +783,14 @@
                 flex-direction: column;
                 gap: 15px;
             }
+
+            .money-amount {
+                font-size: 2rem;
+            }
+
+            .roi-text {
+                font-size: 1.1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -779,6 +812,10 @@
                 height: 40px;
                 font-size: 1.2rem;
             }
+
+            .money-amount {
+                font-size: 1.75rem;
+            }
         }
     </style>
 
@@ -796,13 +833,13 @@
     <header>
         <div class="container">
             <nav>
-                <a href="./index.html" class="logo">
-                    <img src="./te-logo.png" alt="TextExpense Logo" style="width: 40px; height: 40px;">
+                <a href="../index.html" class="logo">
+                    <img src="../assets/te-logo.png" alt="TextExpense Logo" style="width: 40px; height: 40px;">
                     TextExpense
                 </a>
                 <ul class="nav-links">
                     <li><a href="#problem">Problem</a></li>
-                    <li><a href="#solution">How It Works</a></li>
+                    <li><a href="#solution">Solution</a></li>
                     <li><a href="#benefits">Benefits</a></li>
                     <li><a href="#pricing">Pricing</a></li>
                     <li><a href="#faq">FAQ</a></li>
@@ -816,15 +853,16 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Turn Receipt Photos Into<br><span class="highlight">Tax-Ready Books</span></h1>
-            <p class="subheadline">Text receipts → Get organized Excel reports → Never miss deductions. Your accountant will finally stop asking where your records are.</p>
+            <h1>Stop Leaving Your Own Money<br><span class="highlight">on the Table</span></h1>
+            <p class="subheadline">You spent it. You deserve it back. Turn receipt photos into expense reports in minutes, not weekends.</p>
+            <p>Text your receipts via WhatsApp → Get Excel expense report → Submit to your company → Get paid back. No spreadsheets to build, no forms to fill out, no more excuses.</p>
 
             <a href="https://wa.me/17654792054?text=hi" class="hero-cta-button">
-                📱 Try First Receipt FREE
+                📱 Process First Receipt FREE
             </a>
 
             <div class="trust-badge">
-                Over 5,000 small businesses organized
+                Trusted by thousands of employees who finally got reimbursed
             </div>
         </div>
     </section>
@@ -833,28 +871,28 @@
     <section id="problem" class="problem-section">
         <div class="container">
             <div class="section-header">
-                <h2>Messy Records = <span class="highlight">Lost Money</span></h2>
+                <h2>The Real Cost of <span class="highlight">"I'll Do It Later"</span></h2>
             </div>
 
             <div class="problem-grid">
                 <div class="problem-card">
-                    <h3>Missing Deductions</h3>
-                    <p>Every lost receipt is 20-40% of that expense gone forever.</p>
+                    <h3>Your Money Is Sitting There</h3>
+                    <p>You fronted $2,000 for client dinners, hotels, and Ubers. That's your money. But creating the expense report is so tedious that three months later, you still haven't gotten reimbursed. Some companies have 90-day submission limits—wait too long and that money is just gone.</p>
                 </div>
 
                 <div class="problem-card">
-                    <h3>Accountant Drama</h3>
-                    <p>"Where are your records?" emails cost you time and professional respect.</p>
+                    <h3>The Spreadsheet Standoff</h3>
+                    <p>Open Excel. Create columns. Type merchant name. Copy amount. Find date on crumpled receipt. Select category from dropdown. Repeat 47 times. It's boring, it's error-prone, and it's the reason you procrasticate submitting expenses even though it's literally free money.</p>
                 </div>
 
                 <div class="problem-card">
-                    <h3>IRS Risk</h3>
-                    <p>No organized proof = denied deductions even if legitimate.</p>
+                    <h3>Receipt Scavenger Hunt</h3>
+                    <p>Half your receipts are wrinkled in your wallet. Some are in your email. A few are photographed on your phone. One is definitely in your laptop bag somewhere. Gathering everything into one place feels like a project, so you just... don't.</p>
                 </div>
 
                 <div class="problem-card">
-                    <h3>Quarter-End Panic</h3>
-                    <p>Scrambling to recreate 3 months of spending from memory never works.</p>
+                    <h3>Manager Rejection Loops</h3>
+                    <p>Submit a report with missing details or unclear categories? Your manager sends it back. Now you have to find that receipt again, fix the error, resubmit. One small mistake adds days to getting your reimbursement.</p>
                 </div>
             </div>
         </div>
@@ -864,31 +902,31 @@
     <section id="solution" class="solution-section">
         <div class="container">
             <div class="section-header">
-                <h2>Business Bookkeeping, <span class="highlight">Zero Effort</span></h2>
+                <h2>Submit Expense Reports <span class="highlight">Without the Suffering</span></h2>
             </div>
 
             <div class="solution-steps">
                 <div class="step-item">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <h3>Text Receipts</h3>
-                        <p>Photo any receipt and text to WhatsApp. Gas, supplies, meals, software—anything business-related.</p>
+                        <h3>Text Your Receipts</h3>
+                        <p>Got receipts in your wallet, car, email, or desk drawer? Just photograph them and text to our WhatsApp number. Do them all at once or send them as you get them throughout the month.</p>
                     </div>
                 </div>
 
                 <div class="step-item">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Auto-Organized</h3>
-                        <p>We extract and categorize everything. Merchant, date, amount, category, tax—ready for your accountant.</p>
+                        <h3>We Build Your Report</h3>
+                        <p>Our system extracts merchant, date, amount, and category from every receipt. No typing. No spreadsheet building. No hunting for invoice numbers. We handle the tedious parts.</p>
                     </div>
                 </div>
 
                 <div class="step-item">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h3>Download Reports</h3>
-                        <p>Get Excel files by month or quarter. Upload to QuickBooks or hand to your CPA as-is.</p>
+                        <h3>Download & Submit</h3>
+                        <p>Get a properly formatted Excel file that matches your company's expense report format. Upload it to your company portal, attach the receipt images, hit submit. Get your money back.</p>
                     </div>
                 </div>
             </div>
@@ -899,39 +937,61 @@
     <section id="benefits" class="benefits-section">
         <div class="container">
             <div class="section-header">
-                <h2>Why Small Businesses <span class="highlight">Choose This</span></h2>
+                <h2>Why Employees <span class="highlight">Love This</span></h2>
             </div>
 
             <div class="benefits-grid">
                 <div class="benefit-card">
-                    <div class="benefit-icon">💰</div>
-                    <h3>Maximum Tax Deductions</h3>
-                    <p>Never lose a receipt again = never lose potential deductions. Every business expense properly documented means more write-offs.</p>
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Submit Same Day</h3>
+                    <p>Process months of backlogged receipts during your lunch break. What used to take a weekend now takes minutes. Submit today, get reimbursed this pay period instead of next quarter.</p>
                 </div>
 
                 <div class="benefit-card">
-                    <div class="benefit-icon">📊</div>
-                    <h3>Accountant-Ready Format</h3>
-                    <p>Your CPA wants Excel with categories? Done. Receipt images attached? Included. Stop paying extra for "cleanup fees."</p>
+                    <div class="benefit-icon">✅</div>
+                    <h3>No More Rejection Loops</h3>
+                    <p>We extract every required field: merchant name, date, amount, category, invoice number. Your manager gets a complete report with nothing to send back for corrections. First-time approval becomes the norm.</p>
                 </div>
 
                 <div class="benefit-card">
-                    <div class="benefit-icon">🛡️</div>
-                    <h3>Audit Protection</h3>
-                    <p>IRS asks for proof of that $4,500 equipment purchase? One click to the original receipt image, properly organized and dated.</p>
+                    <div class="benefit-icon">🏢</div>
+                    <h3>Works With Your Company System</h3>
+                    <p>Excel export works with any corporate expense system. We don't replace your company's process—we make it bearable.</p>
                 </div>
 
                 <div class="benefit-card">
-                    <div class="benefit-icon">📅</div>
-                    <h3>Quarterly Reports in Minutes</h3>
-                    <p>Pull Q1 spending by category in 60 seconds. See where money's going without spreadsheet gymnastics.</p>
+                    <div class="benefit-icon">🔗</div>
+                    <h3>Receipt Images Included</h3>
+                    <p>Every row in your Excel report links to the original receipt image, properly compressed and stored. Your finance team wants proof? One click. Audit request? Already handled.</p>
                 </div>
 
                 <div class="benefit-card">
-                    <div class="benefit-icon">⭐</div>
-                    <h3>Look Professional</h3>
-                    <p>Show up to tax appointments with organized records. Build accountant relationships that actually help your business.</p>
+                    <div class="benefit-icon">📱</div>
+                    <h3>Mobile-First Reality</h3>
+                    <p>You're on the road. You're working from coffee shops. You're traveling for client meetings. You don't have time to sit at a desktop and build spreadsheets. Text-based processing fits how you actually work.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Money Recovery Section -->
+    <section class="money-recovery-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Much Are You <span class="highlight">Leaving Unclaimed?</span></h2>
+            </div>
+
+            <div class="money-box">
+                <p style="font-size: 1.2rem; color: var(--gray); margin-bottom: 10px;">Simple Math</p>
+                <p style="font-size: 1.1rem; color: var(--dark);">Most people putting off expense reports have</p>
+                <div class="money-amount">$500-$2,000</div>
+                <p style="font-size: 1.1rem; color: var(--dark); margin-bottom: 20px;">sitting in unclaimed reimbursements.</p>
+
+                <p style="color: var(--gray); line-height: 1.7; margin-bottom: 20px;">Client lunches, rideshares, hotels, flights—it adds up fast when you're not submitting regularly.</p>
+
+                <div class="roi-text">Our service costs $4.99/month.</div>
+
+                <p style="color: var(--gray); line-height: 1.7; margin-top: 20px;">If you have even $200 in backlogged expenses, the ROI is instant. And you'll actually stay current going forward.</p>
             </div>
         </div>
     </section>
@@ -940,42 +1000,42 @@
     <section class="testimonials">
         <div class="container">
             <div class="section-header">
-                <h2>Real Results From <span class="highlight">Real Businesses</span></h2>
+                <h2>What Road Warriors & <span class="highlight">Remote Workers Say</span></h2>
             </div>
 
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-quote">
-                        "My accountant said it was the cleanest records she'd seen from a small business."
+                        "Had $1,800 in receipts I kept putting off. Used my lunch break to text them all, got my Excel report, submitted same day. Reimbursement hit my account the next pay period. Easiest money I ever recovered."
                     </div>
                     <div class="testimonial-author">
                         <div>
-                            <div class="author-name">Rachel M.</div>
-                            <div class="author-title">Graphic Design Studio</div>
+                            <div class="author-name">David P.</div>
+                            <div class="author-title">Sales Engineer</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="testimonial-quote">
-                        "Recovered $3,200 in deductions I would've missed with my old shoebox system."
+                        "I travel constantly for work. Before this, I'd submit expenses quarterly because creating the reports was torture. Now I text receipts from the airport and stay current. Haven't had a rejection in 6 months."
                     </div>
                     <div class="testimonial-author">
                         <div>
-                            <div class="author-name">Mike T.</div>
-                            <div class="author-title">Contractor</div>
+                            <div class="author-name">Amanda F.</div>
+                            <div class="author-title">Consultant</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="testimonial-quote">
-                        "Organized 8 months of receipts during one slow afternoon. Felt amazing."
+                        "My company requires itemized receipts and specific categories. Used to take me forever to build compliant reports. Now it's minutes. My Friday afternoons are mine again."
                     </div>
                     <div class="testimonial-author">
                         <div>
-                            <div class="author-name">Sarah K.</div>
-                            <div class="author-title">Marketing Consultant</div>
+                            <div class="author-name">James L.</div>
+                            <div class="author-title">Field Service Rep</div>
                         </div>
                     </div>
                 </div>
@@ -987,57 +1047,57 @@
     <section id="faq" class="faq-section">
         <div class="container">
             <div class="section-header">
-                <h2><span class="highlight">Everything</span> You Need To Know</h2>
+                <h2><span class="highlight">Reimbursement</span> Questions Answered</h2>
             </div>
 
             <div class="faq-container">
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Will my accountant accept these reports?</h3>
+                        <h3>Will this work with my company's expense system?</h3>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes. Standard Excel format that works with any accounting software or tax professional. Most accountants prefer this over shoeboxes or random spreadsheets.</p>
+                        <p>Yes. We export standard Excel files that work with any corporate expense platform. If your company uses paper forms, you can print the report directly.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>What if I have months of backlog?</h3>
+                        <h3>What if I have months of backlogged receipts?</h3>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Perfect. Text all your receipts over a lunch break. We organize them chronologically with proper categories. Most users clear months of backlog in minutes.</p>
+                        <p>Perfect use case. Text them all over a lunch break. We'll organize them chronologically and categorize them properly. Most users clear months of backlog in minutes.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Can I track multiple business categories?</h3>
+                        <h3>Can I submit receipts from my email/online orders?</h3>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Absolutely. We auto-categorize (meals, travel, supplies, equipment, etc.) and you can edit any category to match your business structure or accountant's requirements.</p>
+                        <p>Absolutely. Forward confirmation emails to yourself, screenshot them, and text the image. Or download PDFs and send them. We process any receipt format.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>How does this help with tax deductions?</h3>
+                        <h3>What if my company has specific category requirements?</h3>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Organized records mean you actually claim every legitimate deduction. Plus receipt images provide IRS-acceptable proof if needed. Most users find $500-$2000 in previously missed deductions.</p>
+                        <p>You can edit any field before downloading your report. We suggest categories based on the merchant, but you have full control to match your company's exact requirements.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Is this IRS-audit-proof?</h3>
+                        <h3>How fast can I actually get reimbursed?</h3>
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        <p>We provide organized Excel records plus original receipt images—exactly what the IRS requires for expense verification. It's the same format professional bookkeepers use.</p>
+                        <p>That depends on your company's approval process, but you can submit your report the same day you process receipts with us. Most companies process approved reports within 1-2 pay periods.</p>
                     </div>
                 </div>
             </div>
@@ -1048,23 +1108,23 @@
     <section class="urgency-section">
         <div class="container">
             <div class="section-header">
-                <h2>Every Unorganized Day <span style="color: var(--warning);">Costs You</span></h2>
+                <h2>Every Day You Wait <span style="color: var(--warning);">Costs You</span></h2>
             </div>
 
             <div class="urgency-grid">
                 <div class="urgency-card">
-                    <h3>Tax season comes fast.</h3>
-                    <p>Start organizing now instead of panicking in March.</p>
+                    <h3>Submission Deadlines Are Real</h3>
+                    <p>Many companies have 60-90 day submission windows. Wait too long and your reimbursement becomes ineligible. That client dinner from 89 days ago? You're about to eat that cost permanently if you don't submit this week.</p>
                 </div>
 
                 <div class="urgency-card">
-                    <h3>Receipts fade.</h3>
-                    <p>Thermal paper receipts become unreadable in months. Digital backup now = proof later.</p>
+                    <h3>Your Cash Flow Matters</h3>
+                    <p>You fronted that money. Your credit card is carrying that balance. The longer you wait to get reimbursed, the longer you're essentially giving your employer an interest-free loan of your own money.</p>
                 </div>
 
                 <div class="urgency-card">
-                    <h3>Deductions expire.</h3>
-                    <p>Most businesses can only claim expenses from current/prior tax year. Organize while you still can.</p>
+                    <h3>The Pile Only Gets Bigger</h3>
+                    <p>Every business trip adds receipts. Every client meeting adds expenses. The longer you procrastinate, the more overwhelming the backlog becomes. Start now and stay current instead of facing a quarterly nightmare.</p>
                 </div>
             </div>
         </div>
@@ -1074,21 +1134,22 @@
     <section id="pricing" class="pricing-section">
         <div class="container">
             <div class="section-header">
-                <h2>Plans That Scale With <span class="highlight">Your Business</span></h2>
+                <h2>Faster Reimbursement for <span class="highlight">Less Than Lunch</span></h2>
             </div>
 
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3>Light Plan</h3>
                     <div class="price">$2.99<span>/month</span></div>
-                    <p class="price-description">Perfect for side hustles</p>
+                    <p class="price-description">Great for occasional business expenses</p>
                     <ul class="pricing-features">
-                        <li>6 receipts monthly</li>
-                        <li>WhatsApp processing (no app needed)</li>
-                        <li>Accountant-ready Excel exports</li>
-                        <li>Receipt image backup with download links</li>
-                        <li>Multi-month reports</li>
-                        <li>IRS-compliant organization</li>
+                        <li>6 receipts per month</li>
+                        <li>WhatsApp-based processing (works from anywhere)</li>
+                        <li>Excel reports ready for company systems</li>
+                        <li>Automatic categorization</li>
+                        <li>Receipt image backup and linking</li>
+                        <li>Multi-month report generation</li>
+                        <li>Edit any field before export</li>
                         <li>Cancel anytime</li>
                     </ul>
                     <a href="https://wa.me/17654792054?text=hi" class="cta-button" style="width: 100%; text-align: center;">Get Started</a>
@@ -1097,9 +1158,9 @@
                 <div class="pricing-card featured">
                     <h3>Pro Plan</h3>
                     <div class="price">$4.99<span>/month</span></div>
-                    <p class="price-description">Built for real businesses</p>
+                    <p class="price-description">Perfect for regular travelers and client-facing roles</p>
                     <ul class="pricing-features">
-                        <li>25 receipts monthly</li>
+                        <li>25 receipts per month</li>
                         <li>Everything in Light, plus:</li>
                         <li>Priority processing</li>
                         <li>Advanced Excel reports</li>
@@ -1111,8 +1172,9 @@
                 </div>
             </div>
 
-            <div class="roi-callout">
-                <p>Quick math: If this saves even ONE $100 deduction, it paid for a year.</p>
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 10px;">ROI Reality Check</p>
+                <p style="color: var(--gray); font-size: 1.1rem;">If you have $500+ in unclaimed expenses sitting around, this pays for itself in month one. Forever.</p>
             </div>
         </div>
     </section>
@@ -1120,13 +1182,13 @@
     <!-- Footer CTA -->
     <section class="footer-cta">
         <div class="container">
-            <h2>Get Your Books Organized Today</h2>
-            <p>Text one receipt. Watch it become a professional bookkeeping entry in 30 seconds. Then do the rest and finally have records you're proud to show your accountant.</p>
+            <h2>Get Your Money Back This Week</h2>
+            <p>Process your first receipt right now for free. Watch it become a proper expense report entry in 30 seconds. Then do the rest of your backlog and finally submit for that reimbursement check.</p>
 
-            <a href="https://wa.me/17654792054?text=hi" class="cta-button">📱 Process Free Receipt Now</a>
+            <a href="https://wa.me/17654792054?text=hi" class="cta-button">📱 Start FREE - Get Reimbursed</a>
 
             <div class="trust-line">
-                Join thousands of small businesses who stopped stressing about records.
+                Your receipts. Your money. Finally claimed.
             </div>
         </div>
     </section>
@@ -1143,7 +1205,7 @@
                 <div class="footer-section">
                     <h3>Product</h3>
                     <ul>
-                        <li><a href="./index.html">Home</a></li>
+                        <li><a href="../index.html">Home</a></li>
                         <li><a href="#solution">How It Works</a></li>
                         <li><a href="#pricing">Pricing</a></li>
                         <li><a href="#faq">FAQ</a></li>
@@ -1153,8 +1215,8 @@
                 <div class="footer-section">
                     <h3>Legal</h3>
                     <ul>
-                        <li><a href="./privacy.html">Privacy Policy</a></li>
-                        <li><a href="./terms.html">Terms & Conditions</a></li>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../terms.html">Terms & Conditions</a></li>
                     </ul>
                 </div>
 
@@ -1168,9 +1230,9 @@
             <div class="footer-guarantees">
                 <span>✓ No app to download</span>
                 <span>✓ Works via WhatsApp</span>
-                <span>✓ Accountant-ready Excel exports</span>
+                <span>✓ Company-compliant Excel exports</span>
                 <span>✓ Cancel anytime</span>
-                <span>✓ IRS-compliant</span>
+                <span>✓ Secure & encrypted</span>
             </div>
 
             <div class="footer-bottom">
@@ -1249,7 +1311,7 @@
                             'button_location': buttonLocation,
                             'button_text': buttonText,
                             'page_url': window.location.href,
-                            'page_type': 'small_business_accounting_landing'
+                            'page_type': 'expense_reimbursement_landing'
                         });
                     }
                 });
